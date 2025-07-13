@@ -298,6 +298,31 @@ spec:
         ports:
         - containerPort: 80
 
+2. Rolling Update Strategy Deployment
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-rolling-update
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1		# Ensures app availability during updates.
+      maxSurge: 1		# Speeds up deployment by allowing new pods to be ready before old ones go down.
+  selector:			
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.25
+
 --------------------------------------
 
 
