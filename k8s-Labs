@@ -266,6 +266,41 @@ kubectl get pods
 -----------------------------------------------------------------------------
 kubectl delete -f dep-nginx.yaml
 
+Do it yourself
+========================
+
+1. Deployment with Resource Limits and Requests
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-resources
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.25
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+        ports:
+        - containerPort: 80
+
+--------------------------------------
+
+
 ---------------------------------------------------------------------------------
 =============================================================
 Lab 4: Services in Kubernetes
